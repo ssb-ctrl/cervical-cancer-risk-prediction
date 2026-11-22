@@ -36,9 +36,6 @@ Accuracy looks high because most patients are negative. The model missed 2 of th
 - Try class weighting (`scale_pos_weight`) and a Logistic Regression baseline
 - Other screening-test columns (Hinselmann, Schiller, Citology) are included as features and may inflate results
 
-## Tech Stack
-Python, Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn, XGBoost, Jupyter Notebook
-
 ## Project Structure
 ```
 ├── Cervical_Cancer_Prediction.ipynb   # analysis and model
