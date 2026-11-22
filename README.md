@@ -1,101 +1,56 @@
-<p align="center"> 
-<a href="https://github.com/milaan9"><img src="https://img.shields.io/static/v1?logo=github&label=maintainer&message=milaan9&color=ff3300" alt="Last Commit"/></a> 
-<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fmilaan9%2F/tree/main/001_Cervical_Cancer_Predection_with_ML&count_bg=%231DC92C&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false"/></a>
-</p> 
-<!--<img src="https://badges.pufler.dev/contributors/milaan9/01_Python_Introduction?size=50&padding=5&bots=true" alt="milaan9"/>-->
- 
- 
-# Cervical_Cancer_Predection_with_ML
+# Cervical Cancer Risk Prediction
 
-In this project, built and trained an XG-Boost classifier to predict whether a person has a risk of having cervical cancer. Data was obtained from 858 patients at 'Hospital Universitario de Caracas' in Caracas, Venezuels and included features such as number of pregnancies, smoking habits, Sexually Transmitted Disease (STD), demographics, and historic medical records. Performed Exploratory Data Analysis and Data Visualization on the training data set. Prepared the data and splitted into training and test dataset before Model Training. XG-Boost-Algorithm was trained and evaluated for this task using sci-kit library in Python. The Accuracy for this Machine Learning Model came out to be: 
--99.562 % (Training Dataset) 
--95.348 % (Test Dataset)
+Predicting biopsy-confirmed cervical cancer from patient demographics, habits and medical history using an XGBoost classifier.
 
-<p align="center">  
- <img src="https://miro.medium.com/max/3164/1*GRdoM-q5Sc0l58EBw9qQcA.png" width="700"/>
-</p>                                                             
+## Dataset
+- **858 patients** from Hospital Universitario de Caracas, Venezuela
+- 36 raw columns covering demographics, sexual and reproductive history, smoking, hormonal contraceptives, IUD use, STD history and screening test results
+- **Target:** `Biopsy` (about 6.4% positive, so heavily imbalanced)
 
----
+## Workflow
+1. **Cleaning:** replaced `?` with NaN, dropped two sparsely filled columns (time since first/last STD diagnosis), converted columns to numeric and imputed missing values with column means
+2. **EDA:** missing-value heatmaps, correlation matrix heatmap and feature histograms
+3. **Preparation:** standardized features with `StandardScaler`; split into train (80%), test (10%) and validation (10%)
+4. **Model:** `XGBClassifier(learning_rate=0.1, max_depth=50, n_estimators=100)`
+5. **Evaluation:** accuracy, classification report and confusion matrix
 
+## Results
+| Metric | Score |
+|---|---|
+| Train accuracy | 99.6% |
+| Test accuracy | 97.7% |
 
-## Install Necessary Modules:
+Test-set classification report (86 patients):
 
-Open your [![Anaconda](https://img.shields.io/badge/Anaconda-342B029.svg?&style=flate&logo=anaconda&logoColor=white)](https://www.anaconda.com/products/individual) Prompt <img alt="propmt" src="https://img.shields.io/badge/-__-000000?style=flat-square&logo=Plex&logoColor=white"> and type and run the following command (individually):
+| Class | Precision | Recall | F1 | Support |
+|---|---|---|---|---|
+| 0 (negative) | 0.98 | 1.00 | 0.99 | 81 |
+| 1 (positive) | 1.00 | 0.60 | 0.75 | 5 |
 
- -       pip install pandas
-       
- -       pip install numpy  
-  
- -       pip install seaborn
- 
- -       pip install plotly
-     
- -       pip install jupyterthemes
- 
- -       pip install seaborn
- 
- -       pip install --upgrade pip
- 
- -       pip install xgboost
+Accuracy looks high because most patients are negative. The model missed 2 of the 5 positive cases in the test set. No random seed is fixed, so exact numbers vary between runs.
 
-Once Installed now we can import it inside our python code.
+## Limitations and next steps
+- Evaluate with PR-AUC and ROC-AUC, since accuracy is misleading on imbalanced data
+- Use a stratified split and cross-validation, as the test set has only 5 positive cases
+- Fit imputation and scaling on the training set only, to avoid leakage
+- Try class weighting (`scale_pos_weight`) and a Logistic Regression baseline
+- Other screening-test columns (Hinselmann, Schiller, Citology) are included as features and may inflate results
 
----
+## Tech Stack
+Python, Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn, XGBoost, Jupyter Notebook
 
-## Frequently asked questions ❔
+## Project Structure
+```
+├── Cervical_Cancer_Prediction.ipynb   # analysis and model
+├── data/                              # dataset
+├── LICENSE
+└── README.md
+```
 
-### How can I thank you for writing and sharing this tutorial? 🌷
-
-You can <img src="https://img.shields.io/static/v1?label=%E2%AD%90 Star &message=if%20useful&style=style=flat&color=blue" alt="Star Badge"/> and <img src="https://img.shields.io/static/v1?label=%E2%B5%96 Fork &message=if%20useful&style=style=flat&color=blue" alt="Fork Badge"/> Starring and Forking is free for you, but it tells me and other people that it was helpful and you like this tutorial.
-
-Go [**`here`**](https://github.com/milaan9/93_Python_Data_Analytics_Projects) if you aren't here already and click ➞ **`✰ Star`** and **`ⵖ Fork`** button in the top right corner. You'll be asked to create a GitHub account if you don't already have one.
-
----
-
-### How can I read this tutorial without an Internet connection? <img alt="GIF" src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/hmm.gif" width="20vw" />
-
-1. Go [**`here`**](https://github.com/milaan9/93_Python_Data_Analytics_Projects) and click the big green ➞ **`Code`** button in the top right of the page, then click ➞ [**`Download ZIP`**](https://github.com/milaan9/93_Python_Data_Analytics_Projects/archive/refs/heads/main.zip).
-
-    ![Download ZIP](https://github.com/milaan9/93_Python_Data_Analytics_Projects/blob/main/img/dnld_rep.png)
-
-2. Extract the ZIP and open it. Unfortunately I don't have any more specific instructions because how exactly this is done depends on which operating system you run.
-    
-3. Launch ipython notebook from the folder which contains the notebooks. Open each one of them
-  
-    `Kernel > Restart & Clear Output`
-    
-This will clear all the outputs and now you can understand each statement and learn interactively.
-
-If you have git and you know how to use it, you can also clone the repository instead of downloading a zip and extracting it. An advantage with doing it this way is that you don't need to download the whole tutorial again to get the latest version of it, all you need to do is to pull with git and run ipython notebook again.
-
----
-
-## Authors ✍️
-
-I'm Dr. Milaan Parmar and I have written this tutorial. If you think you can add/correct/edit and enhance this tutorial you are most welcome🙏
-
-See [github's contributors page](https://github.com/milaan9/93_Python_Data_Analytics_Projects/graphs/contributors) for details.
-
-If you have trouble with this tutorial please tell me about it by [Create an issue on GitHub](https://github.com/milaan9/93_Python_Data_Analytics_Projects/issues/new). and I'll make this tutorial better. This is probably the best choice if you had trouble following the tutorial, and something in it should be explained better. You will be asked to create a GitHub account if you don't already have one.
-
-If you like this tutorial, please [give it a ⭐ star](https://github.com/milaan9/93_Python_Data_Analytics_Projects).
-
----
-
-## Licence 📜
-
-You may use this tutorial freely at your own risk. See [LICENSE](https://github.com/milaan9/93_Python_Data_Analytics_Projects/blob/main/LICENSE).
-
-Copyright (c) 2020 Dr. Milaan Parmar
-
----
-
-<div align="center">
-<h3> Connect with me<a href="https://gifyu.com/image/Zy2f"><img src="https://github.com/milaan9/milaan9/blob/main/Handshake.gif" width="50px"></a>
-</h3> 
-<p align="center">
-    <a href="https://www.linkedin.com/in/milaanparmar" target="_blank"><img alt="LinkedIn" width="25px" src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Linkedin.svg"></a>
-    <a href="https://www.instagram.com/milaanparmar9" target="_blank"><img alt="Instagram" width="25px" src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Instagram.svg"></a>
-    <a href="https://www.facebook.com/milaanparmar" target="_blank"><img alt="Facebook" width="25px" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"></a>
-    <a href="mailto:milaanparmar9@gmail.com" target="_blank"><img alt="Gmail" width="25px" src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Gmail.svg"></a> 
-</p> 
+## How to Run
+```bash
+git clone https://github.com/ssb-ctrl/cervical-cancer-risk-prediction.git
+cd cervical-cancer-risk-prediction
+pip install pandas numpy matplotlib seaborn plotly scikit-learn xgboost jupyter
+jupyter notebook
+```
